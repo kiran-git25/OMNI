@@ -7,7 +7,7 @@
       "config": {
         "distDir": "build",
         "includeFiles": [
-          "node_modules/unrar.js/dist/unrar.wasm",
+          "node_modules/@samuelthomas2774/unrar.js/dist/unrar.wasm",
           "node_modules/7z-wasm/7z.wasm",
           "public/sw.js"
         ]
