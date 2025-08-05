@@ -1,27 +1,19 @@
-omni/
+omniplay/
 ├── public/
 │   ├── index.html
-│   └── favicon.ico
+│   ├── sw.js (Service Worker)
+│   └── assets/ (favicons, etc.)
 ├── src/
 │   ├── components/
 │   │   ├── FileViewer/
-│   │   │   ├── FileViewer.jsx
-│   │   │   └── FileViewer.css
 │   │   ├── ChatSystem/
-│   │   │   ├── Chat.jsx
-│   │   │   ├── Message.jsx
-│   │   │   └── Chat.css
 │   │   └── UI/
-│   │       ├── DropZone.jsx
-│   │       └── UrlInput.jsx
-│   ├── hooks/
-│   │   ├── useFileHandler.js
-│   │   └── useChat.js
-│   ├── utils/
-│   │   ├── fileUtils.js
-│   │   └── chatUtils.js
+│   ├── contexts/ (React contexts)
+│   ├── hooks/ (Custom hooks)
+│   ├── utils/ (Utility functions)
 │   ├── App.jsx
 │   ├── App.css
 │   └── index.js
 ├── package.json
-└── vercel.json
+├── vercel.json
+└── README.md
