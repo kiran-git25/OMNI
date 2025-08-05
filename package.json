@@ -16,10 +16,7 @@
     "react-virtualized-auto-sizer": "^1.0.8",
     "idb": "^7.1.1",
     "crypto-js": "^4.1.1",
-    "7z-wasm": "^1.0.0",
-    "@eslint/config-array": "^0.11.0",
-    "@rollup/plugin-terser": "^0.4.3",
-    "svgo": "^3.0.2"
+    "7z-wasm": "^1.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -38,10 +35,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "resolutions": {
-    "eslint": "^8.57.0",
-    "svgo": "^3.0.0",
-    "glob": "^9.0.0"
   }
 }
