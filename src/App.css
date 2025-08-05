@@ -1,11 +1,25 @@
-/* App.css - Basic styles to prevent build errors */
+/* App.css - Basic styles */
 .file-viewer {
   padding: 20px;
+  font-family: sans-serif;
 }
+
 .error {
-  color: red;
+  color: #ff4444;
+  padding: 10px;
 }
+
 .loading-spinner {
   text-align: center;
   padding: 20px;
+}
+
+.file-info {
+  margin-bottom: 15px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.file-content {
+  margin-top: 15px;
 }
