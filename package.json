@@ -11,7 +11,7 @@
     "xlsx": "^0.18.5",
     "highlight.js": "^11.7.0",
     "pdfjs-dist": "^3.4.120",
-    "comlink": "^4.3.1",
+    "@samuelthomas2774/unrar.js": "^1.0.0",
     "7z-wasm": "^1.0.0",
     "react-window": "^1.8.9",
     "react-virtualized-auto-sizer": "^1.0.8",
@@ -23,12 +23,5 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": ["react-app", "react-app/jest"]
-  },
-  "browserslist": {
-    "production": [">0.2%", "not dead", "not op_mini all"],
-    "development": ["last 1 chrome version", "last 1 firefox version", "last 1 safari version"]
   }
 }
