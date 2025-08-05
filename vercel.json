@@ -5,11 +5,19 @@
       "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "build"
+        "distDir": "build",
+        "includeFiles": ["public/sw.js"]
       }
     }
   ],
   "routes": [
+    {
+      "src": "/sw.js",
+      "dest": "/sw.js",
+      "headers": {
+        "Service-Worker-Allowed": "/"
+      }
+    },
     {
       "src": "/(.*)",
       "dest": "/"
