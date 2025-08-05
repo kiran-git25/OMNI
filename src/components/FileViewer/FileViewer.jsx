@@ -18,24 +18,15 @@ export default function FileViewer() {
       setIsLoading(true);
       try {
         const extension = currentFile.name.split('.').pop().toLowerCase();
-        let rendered;
-        
-        if (['zip', 'rar', '7z'].includes(extension)) {
-          rendered = await displayArchive(currentFile);
-        } 
-        else if (extension === 'pdf') {
-          rendered = await displayPDF(currentFile);
-        }
-        // Add other file type handlers here
-        
-        setContent(rendered);
-      } catch (error) {
-        console.error('File rendering error:', error);
         setContent(
-          <div className="error">
-            Failed to render file: {error.message}
-          </div>
+          ['zip', 'rar', '7z'].includes(extension)
+            ? await displayArchive(currentFile)
+            : extension === 'pdf'
+              ? await displayPDF(currentFile)
+              : <div>Unsupported file type</div>
         );
+      } catch (error) {
+        setContent(<div className="error">Failed to render file</div>);
       } finally {
         setIsLoading(false);
       }
@@ -50,14 +41,10 @@ export default function FileViewer() {
         <>
           <div className="file-info">
             <h3>{currentFile.name}</h3>
-            <p>{formatBytes(currentFile.size)} • {currentFile.type}</p>
+            <p>{formatBytes(currentFile.size)}</p>
           </div>
           <div className="file-content">
-            {isLoading ? (
-              <div className="loading-spinner">Loading...</div>
-            ) : (
-              content || <p>No content to display</p>
-            )}
+            {isLoading ? 'Loading...' : content}
           </div>
         </>
       ) : (
