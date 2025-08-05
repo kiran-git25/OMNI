@@ -1,0 +1,27 @@
+omni/
+├── public/
+│   ├── index.html
+│   └── favicon.ico
+├── src/
+│   ├── components/
+│   │   ├── FileViewer/
+│   │   │   ├── FileViewer.jsx
+│   │   │   └── FileViewer.css
+│   │   ├── ChatSystem/
+│   │   │   ├── Chat.jsx
+│   │   │   ├── Message.jsx
+│   │   │   └── Chat.css
+│   │   └── UI/
+│   │       ├── DropZone.jsx
+│   │       └── UrlInput.jsx
+│   ├── hooks/
+│   │   ├── useFileHandler.js
+│   │   └── useChat.js
+│   ├── utils/
+│   │   ├── fileUtils.js
+│   │   └── chatUtils.js
+│   ├── App.jsx
+│   ├── App.css
+│   └── index.js
+├── package.json
+└── vercel.json
