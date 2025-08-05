@@ -1,49 +1,46 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { FileProvider } from './contexts/FileContext';
+import { ChatProvider } from './contexts/ChatContext';
 import FileViewer from './components/FileViewer/FileViewer';
 import ChatSystem from './components/ChatSystem/Chat';
-import DropZone from './components/UI/DropZone';
-import UrlInput from './components/UI/UrlInput';
+import NavBar from './components/UI/NavBar';
 import './App.css';
 
 function App() {
   const [activeTab, setActiveTab] = useState('viewer');
-  const [file, setFile] = useState(null);
-  const [chatId, setChatId] = useState('');
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+  useEffect(() => {
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
 
   return (
-    <div className="app-container">
-      <header>
-        <h1>OmniPlay</h1>
-        <nav>
-          <button 
-            onClick={() => setActiveTab('viewer')} 
-            className={activeTab === 'viewer' ? 'active' : ''}
-          >
-            File Viewer
-          </button>
-          <button 
-            onClick={() => setActiveTab('chat')} 
-            className={activeTab === 'chat' ? 'active' : ''}
-          >
-            Chat
-          </button>
-        </nav>
-      </header>
-
-      <main>
-        {activeTab === 'viewer' ? (
-          <>
-            <div className="input-section">
-              <DropZone onFileLoad={setFile} />
-              <UrlInput onUrlLoad={setFile} />
+    <FileProvider>
+      <ChatProvider>
+        <div className="app-container">
+          <NavBar activeTab={activeTab} setActiveTab={setActiveTab} />
+          
+          {!isOnline && (
+            <div className="offline-banner">
+              You are currently offline. Some features may be limited.
             </div>
-            <FileViewer file={file} />
-          </>
-        ) : (
-          <ChatSystem chatId={chatId} setChatId={setChatId} />
-        )}
-      </main>
-    </div>
+          )}
+
+          <main>
+            {activeTab === 'viewer' ? <FileViewer /> : <ChatSystem />}
+          </main>
+        </div>
+      </ChatProvider>
+    </FileProvider>
   );
 }
 
