@@ -13,41 +13,40 @@ export async function extractRar(file) {
       if (!entry.dir) {
         files.push({
           name,
-          size: entry._data.uncompressedSize
+          size: entry._data.uncompressedSize,
+          isDirectory: false
         });
       }
     }
     
     return files;
   } catch (error) {
-    throw new Error(`RAR extraction failed: ${error.message}`);
+    console.error('RAR extraction error:', error);
+    throw new Error(`Failed to read RAR archive: ${error.message}`);
   }
 }
 
-export async function extractFirstSmallFile(file, maxSize = 10_000_000) {
+export async function extractFileFromRar(file, targetFileName) {
   try {
     const buffer = await file.arrayBuffer();
     const zip = new JSZip();
     await zip.loadAsync(buffer);
     
-    // Find first file < maxSize
-    const [fileName, fileEntry] = Object.entries(zip.files)
-      .find(([name, entry]) => !entry.dir && entry._data.uncompressedSize < maxSize) || [];
-    
-    if (!fileName) throw new Error('No suitable file found');
-    
-    // Extract file content
+    const fileEntry = zip.files[targetFileName];
+    if (!fileEntry || fileEntry.dir) {
+      throw new Error('File not found in archive');
+    }
+
     const content = await fileEntry.async('uint8array');
-    
-    // Detect MIME type
-    const type = await fileTypeFromBuffer(content) || 
-                 { mime: 'application/octet-stream' };
+    const type = await fileTypeFromBuffer(content) || { mime: 'application/octet-stream' };
     
     return {
-      name: fileName,
-      content: new Blob([content], { type: type.mime })
+      name: targetFileName,
+      content: new Blob([content], { type: type.mime }),
+      size: fileEntry._data.uncompressedSize
     };
   } catch (error) {
-    throw new Error(`RAR extraction failed: ${error.message}`);
+    console.error('File extraction error:', error);
+    throw new Error(`Failed to extract file: ${error.message}`);
   }
 }
