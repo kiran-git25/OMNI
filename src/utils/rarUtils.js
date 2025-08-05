@@ -1,19 +1,17 @@
-import { UnRAR } from '@samuelthomas2774/unrar.js';
+import { Rar } from 'unrar.js';
 
 export async function extractRar(file) {
   try {
     const arrayBuffer = await file.arrayBuffer();
-    const unrar = await UnRAR.create(arrayBuffer);
+    const rar = new Rar(arrayBuffer);
     const files = [];
     
-    for (const entry of unrar.entries) {
-      if (!entry.isDirectory) {
-        files.push({
-          name: entry.name,
-          size: entry.size
-        });
-      }
-    }
+    rar.getFiles().forEach(file => {
+      files.push({
+        name: file.name,
+        size: file.size
+      });
+    });
     
     return files;
   } catch (error) {
