@@ -3,16 +3,8 @@ import * as mammoth from 'mammoth';
 import * as XLSX from 'xlsx';
 import { extractRar } from './rarUtils';
 
-// Format file size
-function formatBytes(bytes) {
-  if (bytes === 0) return '0 Bytes';
-  const k = 1024;
-  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-}
+// ... (keep all existing functions until displayArchive)
 
-// Archive handling
 export async function displayArchive(file) {
   try {
     let files = [];
@@ -54,22 +46,4 @@ export async function displayArchive(file) {
   }
 }
 
-function renderFileList(files, format) {
-  return (
-    <div className="archive-viewer">
-      <h4>{format} Archive Contents</h4>
-      <div className="archive-contents">
-        <ul>
-          {files.map((file, index) => (
-            <li key={index}>
-              <span className="file-name">{file.name}</span>
-              <span className="file-size">{formatBytes(file.size)}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  );
-}
-
-// ... (keep all your other existing functions)
+// ... (keep the rest of your fileUtils.js)
