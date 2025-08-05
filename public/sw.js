@@ -1,47 +1,33 @@
-const CACHE_NAME = 'omniplay-v2';
+const CACHE_NAME = 'omniplay-v3';
 const ASSETS = [
   '/',
   '/index.html',
   '/static/js/main.js',
   '/static/css/main.css',
-  // Add other assets to cache
+  '/manifest.json'
 ];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(ASSETS);
-    })
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(ASSETS))
   );
 });
 
 self.addEventListener('fetch', (event) => {
-  if (event.request.url.includes('/api/') || event.request.method !== 'GET') {
-    return fetch(event.request);
-  }
-
+  if (event.request.method !== 'GET') return;
+  
   event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request).then(fetchResponse => {
-        return caches.open(CACHE_NAME).then(cache => {
-          cache.put(event.request, fetchResponse.clone());
-          return fetchResponse;
-        });
-      });
-    })
+    caches.match(event.request)
+      .then(cached => cached || fetch(event.request))
   );
 });
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cache => {
-          if (cache !== CACHE_NAME) {
-            return caches.delete(cache);
-          }
-        })
-      );
-    })
+    caches.keys()
+      .then(keys => Promise.all(
+        keys.map(key => key !== CACHE_NAME && caches.delete(key))
+      ))
   );
 });
