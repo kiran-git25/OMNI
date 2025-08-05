@@ -1,0 +1,11 @@
+/* App.css - Basic styles to prevent build errors */
+.file-viewer {
+  padding: 20px;
+}
+.error {
+  color: red;
+}
+.loading-spinner {
+  text-align: center;
+  padding: 20px;
+}
