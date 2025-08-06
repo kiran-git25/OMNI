@@ -5,6 +5,10 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+     "react-router-dom": "^6.22.1",
+  "jszip": "^3.10.1",
+  "mammoth": "^1.4.0",
+  "xlsx": "^0.18.5",
     "react-scripts": "^5.0.1",
     "@jridgewell/sourcemap-codec": "^1.4.15",
     "@rollup/plugin-terser": "^0.4.3"
