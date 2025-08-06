@@ -1,51 +1,40 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect } from 'react';
 
 export const ChatContext = createContext({
-  currentChat: null,
   messages: [],
-  sendMessage: () => {},
-  startCall: () => {},
-  endCall: () => {},
-  callStatus: 'inactive',
-  peerConnection: null
+  addMessage: () => {},
+  clearChat: () => {},
+  currentChat: { name: 'Default Chat' }
 });
 
 export const ChatProvider = ({ children }) => {
-  const [currentChat, setCurrentChat] = useState({ name: 'Default Chat' });
-  const [messages, setMessages] = useState([]);
-  const [callStatus, setCallStatus] = useState('inactive');
-  const [peerConnection, setPeerConnection] = useState(null);
+  const [messages, setMessages] = useState(() => {
+    const saved = localStorage.getItem('chatMessages');
+    return saved ? JSON.parse(saved) : [];
+  });
 
-  const sendMessage = (text) => {
-    const newMessage = {
+  useEffect(() => {
+    localStorage.setItem('chatMessages', JSON.stringify(messages));
+  }, [messages]);
+
+  const addMessage = (message) => {
+    setMessages(prev => [...prev, {
+      ...message,
       id: Date.now(),
-      text,
-      sender: 'user',
       timestamp: new Date().toISOString()
-    };
-    setMessages(prev => [...prev, newMessage]);
+    }]);
   };
 
-  const startCall = (type) => {
-    setCallStatus(type === 'video' ? 'video-call' : 'audio-call');
-    // In a real app, you would initialize WebRTC connection here
-    setPeerConnection({}); // Placeholder for actual peer connection
-  };
-
-  const endCall = () => {
-    setCallStatus('inactive');
-    setPeerConnection(null);
+  const clearChat = () => {
+    setMessages([]);
   };
 
   return (
     <ChatContext.Provider value={{
-      currentChat,
       messages,
-      sendMessage,
-      startCall,
-      endCall,
-      callStatus,
-      peerConnection
+      addMessage,
+      clearChat,
+      currentChat: { name: 'Default Chat' }
     }}>
       {children}
     </ChatContext.Provider>
