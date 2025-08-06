@@ -6,19 +6,29 @@
       "use": "@vercel/static-build",
       "config": {
         "distDir": "build",
-        "nodeVersion": "22.x"
+        "nodeVersion": "18.x"
       }
     }
   ],
   "routes": [
     {
+      "src": "/static/(.*)",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      }
+    },
+    {
       "src": "/(.*)",
-      "dest": "/"
+      "dest": "/index.html",
+      "headers": {
+        "Cache-Control": "no-cache"
+      }
     }
   ],
-  "build": {
-    "env": {
-      "NODE_ENV": "production"
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
-  }
+  ]
 }
