@@ -1,41 +1,19 @@
 import { createContext, useState, useEffect } from 'react';
 
-export const ChatContext = createContext({
-  messages: [],
-  addMessage: () => {},
-  clearChat: () => {},
-  currentChat: { name: 'Default Chat' }
-});
+export const ChatContext = createContext();
 
 export const ChatProvider = ({ children }) => {
-  const [messages, setMessages] = useState(() => {
-    const saved = localStorage.getItem('chatMessages');
-    return saved ? JSON.parse(saved) : [];
-  });
-
-  useEffect(() => {
-    localStorage.setItem('chatMessages', JSON.stringify(messages));
-  }, [messages]);
+  const [messages, setMessages] = useState([]);
 
   const addMessage = (message) => {
     setMessages(prev => [...prev, {
       ...message,
-      id: Date.now(),
-      timestamp: new Date().toISOString()
+      id: Date.now()
     }]);
   };
 
-  const clearChat = () => {
-    setMessages([]);
-  };
-
   return (
-    <ChatContext.Provider value={{
-      messages,
-      addMessage,
-      clearChat,
-      currentChat: { name: 'Default Chat' }
-    }}>
+    <ChatContext.Provider value={{ messages, addMessage }}>
       {children}
     </ChatContext.Provider>
   );
