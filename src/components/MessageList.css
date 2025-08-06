@@ -1,17 +1,23 @@
-import React from 'react';
-import './MessageList.css';
+.message-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
 
-export default function MessageList({ messages }) {
-  return (
-    <div className="message-list">
-      {messages.map((message) => (
-        <div key={message.id} className={`message ${message.sender}`}>
-          <div className="message-content">{message.text}</div>
-          <div className="message-timestamp">
-            {new Date(message.timestamp).toLocaleTimeString()}
-          </div>
-        </div>
-      ))}
-    </div>
-  );
+.message {
+  margin-bottom: 12px;
+  padding: 8px 12px;
+  border-radius: 4px;
+  max-width: 80%;
+}
+
+.message.user {
+  background-color: #e3f2fd;
+  margin-left: auto;
+}
+
+.message-timestamp {
+  font-size: 0.75rem;
+  color: #666;
+  margin-top: 4px;
 }
