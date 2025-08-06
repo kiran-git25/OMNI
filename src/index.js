@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import { ChatProvider } from './contexts/ChatContext';
 import { FileProvider } from './contexts/FileContext';
-import './index.css';
+import './index.css'; // Make sure this import exists
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
